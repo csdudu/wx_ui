@@ -1,0 +1,203 @@
+@charset "utf-8";
+
+/* 清除内外边距 */
+* {
+  margin: 0;
+  padding: 0;
+
+  -webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements 结构元素 */
+dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
+pre, /* text formatting elements 文本格式元素 */
+fieldset, lengend, button, input, textarea, /* form elements 表单元素 */
+th, td { /* table elements 表格元素 */
+    margin: 0;
+    padding: 0;
+}
+
+/* 设置默认字体 */
+body,
+button, input, select, textarea { /* for ie */
+    /*font: 12px/1 Tahoma, Helvetica, Arial, "宋体", sans-serif;*/
+    font: 12px/1 Tahoma, Helvetica, Arial, "Microsoft YaHei", "\5b8b\4f53", sans-serif; /* 用 ascii 字符表示，使得在任何编码下都无问题 */
+}
+
+h1 {font-weight: normal; font-size: 18px; /* 18px / 12px = 1.5 */ }
+h2 {font-weight: normal; font-size: 16px; }
+h3 {font-weight: normal; font-size: 14px; }
+h4, h5, h6 { font-size: 100%; }
+
+address, cite, dfn, em, var { font-style: normal; } /* 将斜体扶正 */
+code, kbd, pre, samp, tt { font-family: "Courier New", Courier, monospace; } /* 统一等宽字体 */
+small { font-size: 12px; } /* 小于 12px 的中文很难阅读，让 small 正常化 */
+
+/* 重置列表元素 */
+ul, ol { list-style: none; }
+
+/* 重置文本格式元素 */
+a { text-decoration: none; }
+a:hover { text-decoration: none; }
+
+abbr[title], acronym[title] { /* 注：1.ie6 不支持 abbr; 2.这里用了属性选择符，ie6 下无效果 */
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+
+q:before, q:after { content: ''; }
+
+/* 重置表单元素 */
+legend { color: #000; } /* for ie6 */
+fieldset, img { border: none; } /* img 搭车：让链接里的 img 无边框 */
+/* 注：optgroup 无法扶正 */
+button, input, select, textarea {
+    font-size: 100%; /* 使得表单元素在 ie 下能继承字体大小 */
+}
+input {
+  outline: none;
+}
+input[type="text"],
+input[type="tel"] {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+/* 重置表格元素 */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* 重置 hr */
+hr {
+    border: none;
+    height: 1px;
+}
+
+/* 让非ie浏览器默认也显示垂直滚动条，防止因滚动条引起的闪烁 */
+html { overflow-y: scroll; }
+
+
+/*dudu*/
+
+.cl { /* 此类应当放在 div 或 break 元素上，而且该元素应当是完全包含浮动的容器关闭之前的最后一个元素 */
+  clear:both;
+    height:0px;
+    font-size: 0px;
+    line-height: 0px;
+}
+
+.clearfix:after,.layout:after {
+visibility: hidden;
+display: block;
+font-size: 0;
+content: " ";
+clear: both;
+height: 0;
+}
+* html .clearfix,* html .layout,             { zoom: 1; } /* IE6 */
+*:first-child+html .clearfix,*:first-child+html .layout  { zoom: 1; } /* IE7 */
+
+
+.content:after {
+visibility: hidden;
+display: block;
+font-size: 0;
+content: " ";
+clear: both;
+height: 0;
+}
+* html .content             { zoom: 1; } /* IE6 */
+*:first-child+html .content { zoom: 1; } /* IE7 */
+
+.h10{ height:10px;}
+.h15{ height:15px;}
+.h20{ height:20px;}
+.h30{ height:30px;}
+.h40{ height:40px;}
+.h50{ height:50px;}
+
+.r{-webkit-border-radius: 50%;
+-moz-border-radius: 50%;
+border-radius: 50%;}
+
+.fl{float: left;}
+.fr{float: right;}
+
+@font-face {font-family: 'iconfont';
+    src: url('fonts/iconfont.eot'); /* IE9*/
+    src: url('fonts/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('fonts/iconfont.woff') format('woff'), /* chrome、firefox */
+    url('fonts/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('fonts/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;}
+
+.flex{
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-box;
+  display: -o-bsox;
+  display: box; 
+  
+   display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex; 
+  display: -o-flex;
+  display: flex; 
+}
+.flex>*{
+  width: 0;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  -ms-box-flex:1;
+  -o-box-flex:1;
+  box-flex:1;
+  
+  -webkit-flex:1;
+  -moz-flex:1;
+  -ms-flex:1;
+  -o-flex:1;
+  flex:1; 
+}
+
+.flex3{
+  -webkit-box-flex:3;
+  -moz-box-flex:3;
+  -ms-box-flex:3;
+  -o-box-flex:3;
+  box-flex:3;
+  
+  -webkit-flex:3;
+  -moz-flex:3;
+  -ms-flex:3;
+  -o-flex:3;
+  flex:3; 
+}
+
+.flex4{
+  -webkit-box-flex:4;
+  -moz-box-flex:4;
+  -ms-box-flex:4;
+  -o-box-flex:4;
+  box-flex:4;
+  
+  -webkit-flex:4;
+  -moz-flex:4;
+  -ms-flex:4;
+  -o-flex:4;
+  flex:4; 
+}
+
+.trans{
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
