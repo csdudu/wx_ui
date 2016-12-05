@@ -12,11 +12,11 @@
     <link rel="stylesheet" href="font/iconfont.css">
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="common.css">
-    <title>创智易商</title>
+    <title>创智易商VUE</title>
 </head>
 
 <body>
-    <div class="main" v-cloak>
+    <div class="main">
         这是输入框的内容：{{inputTxt}}<br>
         这是输入框的内容长度：{{inputTxt.length}}<br>
         isInputEmpty：{{isInputEmpty}}<br>
@@ -27,7 +27,7 @@
 
     </div>
     <!-- 文字输入 -->
-    <div class="foot" v-cloak>
+    <div class="foot">
 
         <!-- 文字输入面板 -->
         <div class="bar" v-show="isBarWrite">
@@ -57,15 +57,12 @@
             </li>
         </ul>
     </div>
-    
-    </div>
+
 </body>
 <script src="js/adapter.js"></script>
 <script src="js/vue.min.js"></script>
-<!-- <script src="js/alloy_finger.js"></script> -->
 <script>
-
-// 输入框，对div的editable行为的自定义指令
+// 输入框的自定义指令
 Vue.directive('editable', {
     twoWay: true,
     bind: function() {
@@ -97,21 +94,17 @@ vm = new Vue({
             return (this.inputTxt.length==0);
         }
     },
-    watch: {
-        /*inputTxt: function(val, oldVal) {}*/
-    },
-    ready: function() {},
     methods: {
 
-        showIco() {
+        showIco:function() {
             this.isIcoShow = !this.isIcoShow;
         },
-        pushToList() {
+        pushToList:function() {
             this.list.push(this.inputTxt);
             this.inputTxt="";
             this.isIcoShow = false;
         },
-        pushSound() {
+        pushSound:function() {
             this.idSound++;
             this.list.push("　　　<i class='no'>"+this.idSound+"</i><i class='ii ii-yuyin-copy1-copy'></i>");
             this.inputTxt="";
