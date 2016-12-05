@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <div class="main">
+    <div class="main" v-cloak>
         这是输入框的内容：{{inputTxt}}<br>
         这是输入框的内容长度：{{inputTxt.length}}<br>
         isInputEmpty：{{isInputEmpty}}<br>
@@ -27,7 +27,7 @@
 
     </div>
     <!-- 文字输入 -->
-    <div class="foot">
+    <div class="foot" v-cloak>
 
         <!-- 文字输入面板 -->
         <div class="bar" v-show="isBarWrite">
@@ -62,10 +62,10 @@
 </body>
 <script src="js/adapter.js"></script>
 <script src="js/vue.min.js"></script>
-<script src="js/alloy_finger.js"></script>
+<!-- <script src="js/alloy_finger.js"></script> -->
 <script>
 
-// 输入框的自定义指令
+// 输入框，对div的editable行为的自定义指令
 Vue.directive('editable', {
     twoWay: true,
     bind: function() {
@@ -98,9 +98,7 @@ vm = new Vue({
         }
     },
     watch: {
-        /*inputTxt: function(val, oldVal) {
-            this.isInputEmpty=(this.inputTxt.length==0)?true:false;
-        }*/
+        /*inputTxt: function(val, oldVal) {}*/
     },
     ready: function() {},
     methods: {
