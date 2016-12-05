@@ -1,2 +1,0 @@
-ipconfig
-node server.js
