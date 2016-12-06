@@ -12,8 +12,8 @@ background-size: 100% auto;}
 .bar{position: relative; width: 100%; border-top: 1px #d8d8d8 solid; font-size: 0; background-color: #ededed;
 	padding: 0.35rem 0 0.4rem 2.311111rem;  }
 
-.foot_input{ width: 11.07rem; min-height: 1.511111rem; border-bottom: 1px #d8d8d8 solid;  line-height: 140%; max-height: 4rem; outline: none;
-	font-size: 0.666667rem;overflow: hidden; padding: .2rem 0.3rem 0.2rem .3rem; }
+.foot_input{resize:none; width: 11.07rem; background: none; border-radius: 0;min-height: 1.511111rem; border: none;border-bottom: 1px #d8d8d8 solid;  line-height: 140%; max-height: 4rem; outline: none;
+	font-size: 0.666667rem;overflow: hidden; padding: 0.3rem 0.3rem 0.2rem .3rem; width: 45p }
 .btn_sound{ width: 11.07rem; height: 1.511111rem; border: 1px #d8d8d8 solid;border-radius: 0.222222rem; text-align: center;  line-height: 1.511111rem; max-height: 4rem; color: #6f7378;
 	font-size: 0.666667rem;overflow: hidden; padding: .0rem 0.3rem 0.0rem .3rem;  }
 .foot_input:hover{border-bottom-color: #1aad19;}
@@ -36,7 +36,8 @@ overflow: hidden;
 
 .list{}
 .list li{  margin-bottom: 10px; display: block; text-align: right;}
-.list li .txt{border-radius: 0.2rem; font-size: 0.71rem;background-color: #a0e75a; padding:10px 10px; display: inline-block; border: 1px #7fc852 solid;position: relative;text-align: left;}
+.list li .txt{border-radius: 0.2rem; font-size: 0.71rem;background-color: #a0e75a; padding:10px 10px; display: inline-block; border: 1px #7fc852 solid;position: relative;text-align: left;word-wrap: break-word;
+       word-break: break-all;}
 .list li .txt:before{content: "◆";color: #7fc852; position: absolute; top: 0.3rem; right: -0.32rem; font-size: 0.666667rem;}
 .list li .txt:after{content: "◆"; color: #a0e75a; position: absolute; top: 0.3rem; right: -0.28rem; font-size: 0.666667rem; }
 
