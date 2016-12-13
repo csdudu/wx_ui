@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
@@ -13,25 +13,38 @@
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="common.css">
     <title>仿微信输入--使用div+editable生成可变输入框高</title>
+    <style>
+    .fix {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgba(255, 255, 255, .9);
+        z-index: 2;
+    }
+    </style>
 </head>
 
 <body>
-    <div class="main">
-        <h1 style="font-size: 1rem; line-height: 160%; margin-bottom: 10px">方法1：使用div+editable生成可变输入框高--</h1>
-        缺点是：只检测键盘输入，对于鼠标操作无法感知。 <br>
-        
-        11这是输入框的内容：{{inputTxt}}<br>
-        这是输入框的内容长度：{{inputTxt.length}}<br>
-        isInputEmpty：{{isInputEmpty}}<br>
+    <div class="fix">
+        <h1><a href="index2.html">1方法1</a>：使用div+editable生成可变输入框高--</h1> 缺点是：只检测键盘输入，对于鼠标操作无法感知。
+        <br> 11这是输入框的内容：{{inputTxt}}
+        <br> 这是输入框的内容长度：{{inputTxt.length}}
+        <br> document.body.scrollTop: {{s_top}}
+        <br> document.body.scrollHeight: {{s_height}}
+        <br>
         <hr>
-        <ul class="list">
-            <li v-for="el in list"><div class="txt">{{{el}}}</div></li>
-        </ul>
-
+    </div>
+    <div class="main">
+        <div class="wrap">
+            <ul class="list">
+                <li v-for="el in list">
+                    <div class="txt">{{{el}}}</div>
+                </li>
+            </ul>
+        </div>
     </div>
     <!-- 文字输入 -->
     <div class="foot">
-
         <!-- 文字输入面板 -->
         <div class="bar" v-show="isBarWrite">
             <div class="btn btn_sound" @click="isBarWrite=!isBarWrite"> <i class="ii ii-yuyin-copy1-copy"></i> </div>
@@ -39,15 +52,12 @@
             <div class="btn btn_add" @click="showIco"> <i class="ii ii-jiahao1" v-show="isInputEmpty"></i> </div>
             <div class="btn_rect" v-show="!isInputEmpty" @click="pushToList">发送</div>
         </div>
-
         <!-- 语音输入面板 -->
-        <div class="bar"  v-show="!isBarWrite">
+        <div class="bar" v-show="!isBarWrite">
             <div class="btn btn_keyboard" @click="isBarWrite=!isBarWrite"> <i class="ii ii-jianpan1-copy"></i> </div>
             <div class="btn_sound" @click="pushSound">按住 说话</div>
             <div class="btn btn_add" @click="showIco"> <i class="ii ii-jiahao1" v-show="isInputEmpty"></i> </div>
         </div>
-
-
         <div class="cl"></div>
         <ul class="ico_cont" v-show="isIcoShow">
             <li>
@@ -60,65 +70,88 @@
             </li>
         </ul>
     </div>
-
 </body>
 <script src="js/adapter.js"></script>
 <script src="js/vue.min.js"></script>
+<script src="js/jquery3.min.js"></script>
 <script>
+$(document).on('blur', 'input, textarea', function() {
+    setTimeout(function() {
+        window.scrollTo(document.body.scrollLeft, document.body.scrollTop);
+    }, 0);
+});
+
 // 输入框的自定义指令
 Vue.directive('editable', {
     twoWay: true,
     bind: function() {
+
+        var _this = this;
         this.handler = function() {
-            this.set(this.el.innerHTML)
-        }.bind(this)
-        this.el.addEventListener('keyup', this.handler)
+            // alert("ddd");
+            /*console.log(document.body.scrollTop +"---"+ document.body.scrollHeight);
+            var interval = setInterval(function() {
+                vm.s_top = document.body.scrollTop;
+                vm.s_height = document.body.scrollHeight;
+                document.body.scrollTop = document.body.scrollHeight
+            }, 100)*/
+
+            setTimeout(function() {
+                _this.set(_this.el.innerHTML);
+            }, 200);
+        }.bind(this);
+        this.el.addEventListener('input', this.handler);
+        this.el.addEventListener('keyup', this.handler);
+        this.el.addEventListener('paste', this.handler);
     },
     update: function(newValue, oldValue) {
         this.el.innerHTML = newValue || ''
     },
     unbind: function() {
         this.el.removeEventListener('keyup', this.handler)
+        this.el.removeEventListener('paste', this.handler)
     }
 })
 
 vm = new Vue({
     el: 'html',
     data: {
-        idSound: 0,        //语音信息的编号（不可见的）
-        isBarWrite: true,   //当前是文字面板还是语音面板
-        isInputEmpty: true,     //当前输入框是否为空
-        isIcoShow: false,       //图标面板是空打开
-        inputTxt: "ddd",
-        list: ["这是2已经存在的对话1","这是已经存在的对话2这是已经存在的对话2这是"]
+        s_top: 0,
+        s_height: 0,
+        idSound: 0, //语音信息的编号（不可见的）
+        isBarWrite: true, //当前是文字面板还是语音面板
+        isInputEmpty: true, //当前输入框是否为空
+        isIcoShow: false, //图标面板是空打开
+        inputTxt: "大",
+        list: ["这是2已经存在的对话1", "这是已经存在的对话2这是已经存在的对话2这是这是已经存在的对话2这是已经存在的对话2这是这是已经存在的对话2是", "这是已经存在的对话2这是已dds经存在的对话2这是", "这是已经存在的对话2这是c已经c存在的对话2这是",
+            "这是已经存在的3对话2这是已经vb存在的对话2这是", "这是已经存在的dsfdsfd对话2这是已经vb存在的对话2这是"
+        ]
     },
     computed: {
         isInputEmpty: function() {
-            return (this.inputTxt.length==0);
+            return (this.inputTxt.length == 0);
         }
     },
     methods: {
 
-        showIco:function() {
+        showIco: function() {
             this.isIcoShow = !this.isIcoShow;
         },
-        pushToList:function() {
+        pushToList: function() {
             this.list.push(this.inputTxt);
-            this.inputTxt="";
+            this.inputTxt = "";
             this.isIcoShow = false;
         },
-        pushSound:function() {
+        pushSound: function() {
             this.idSound++;
-            this.list.push("　　　<i class='no'>"+this.idSound+"</i><i class='ii ii-yuyin-copy1-copy'></i>");
-            this.inputTxt="";
+            this.list.push("　　　<i class='no'>" + this.idSound + "</i><i class='ii ii-yuyin-copy1-copy'></i>");
+            this.inputTxt = "";
 
             this.isIcoShow = false;
         }
 
     }
 });
-
-
 </script>
 
 </html>
