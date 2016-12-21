@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name='apple-touch-fullscreen' content='yes'>
+    <meta content="fullscreen=yes,preventMove=no" name="ML-Config">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no,email=no,address=no" />
+    <link rel="stylesheet" href="font/iconfont.css">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="common.css">
+    <style>
+        .cont{
+            border-radius: 0.2rem; ;background-color: #a0e75a; padding:10px 10px; display: inline-block; border: 1px #7fc852 solid;position: relative;text-align: left;word-wrap: break-word;
+                   word-break: break-all;
+        }
+        .fixh{font-size: 0.6rem; line-height: 140%; overflow: hidden; position: relative;   }
+        .fixh.active{ max-height: 1.7rem;}
+        .fixh.active:after{
+            content: "......";
+            position: absolute; right: 0; bottom: 0; height: 1.2em; background-color: #a0e75a; padding: 0 0.1rem 0.2rem 0.4rem;
+        }
+        
+        .fixh:first-child{margin-bottom: 0.2rem;}
+        .more{border-top: 1px #fff solid; margin-top: 9px; padding-top: 5px;}
+    </style>
+    <title>仿微信输入-文字显示限高</title>
+</head>
+
+<body>
+    <div class="main">
+
+        <ul class="list">
+            <li v-for="el in list">
+                <div class="cont">
+                    <div class="fixh" v-fixh><b>客情计划：</b>{{{el.kq}}}</div>
+                    <div class="fixh" v-fixh><b>消费计划：</b>{{{el.xs}}}</div>
+                    <div class="more">查看更多</div>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+    <!-- 文字输入 -->
+    <div class="foot">
+
+        <!-- 文字输入面板 -->
+        <div class="bar" v-show="isBarWrite">
+            <div class="btn btn_sound" @click="isBarWrite=!isBarWrite"> <i class="ii ii-yuyin-copy1-copy"></i> </div>
+            <textarea class="foot_input" v-model="inputTxt" rows='1'>{{inputTxt}}</textarea>
+            <div class="btn btn_add" @click="showIco"> <i class="ii ii-jiahao1" v-show="isInputEmpty"></i> </div>
+            <div class="btn_rect" v-show="!isInputEmpty" @click="pushToList">发送</div>
+        </div>
+
+        <!-- 语音输入面板 -->
+        <div class="bar"  v-show="!isBarWrite">
+            <div class="btn btn_keyboard" @click="isBarWrite=!isBarWrite"> <i class="ii ii-jianpan1-copy"></i> </div>
+            <div class="btn_sound" @click="pushSound">按住 说话</div>
+            <div class="btn btn_add" @click="showIco"> <i class="ii ii-jiahao1" v-show="isInputEmpty"></i> </div>
+        </div>
+
+
+        <div class="cl"></div>
+        <ul class="ico_cont" v-show="isIcoShow">
+            <li>
+                <div class="btn_big"><i class="ii ii-tp"></i></div>
+                <h2>图片</h2>
+            </li>
+            <li>
+                <div class="btn_big"><i class="ii ii-yanjing-copy"></i></div>
+                <h2>小视频</h2>
+            </li>
+        </ul>
+    </div>
+
+</body>
+<script src="js/adapter.js"></script>
+<script src="js/vue.min.js"></script>
+<script src="js/autosize.min.js"></script>
+<script>
+var ta = document.querySelector('textarea');
+autosize(ta);
+
+Vue.directive('fixh', {
+    twoWay: true,
+    bind: function() {
+
+        
+        // console.log(this.el.clientHeight);
+        // console.log(this.clientHeight);
+        /*this.handler = function() {
+        }.bind(this);*/
+    },
+    update: function(newValue, oldValue) {
+        var _this = this;
+        /*setTimeout(function() {
+            _this.el.className += " active"
+        }, 200);*/
+
+        setTimeout(function() {
+            
+            var str = window.getComputedStyle(document.querySelector('.fixh'), null).fontSize;
+            var float = parseFloat( str.substring(0,str.length-2) );
+            // alert(_this.el.clientHeight+"--"+float*1.4*2);
+            if(_this.el.clientHeight>float*1.4*2){
+            _this.el.className += " active"
+            }
+        }, 200);
+        
+    },
+    unbind: function() {
+    }
+})
+
+vm = new Vue({
+    el: 'html',
+    data: {
+        idSound: 0,        //语音信息的编号（不可见的）
+        isBarWrite: true,   //当前是文字面板还是语音面板
+        isInputEmpty: true,     //当前输入框是否为空
+        isIcoShow: false,       //图标面板是空打开
+        inputTxt: "在此输入",
+        list: [
+            {
+                "kq":"现金消费800元，项目服务：2个实耗金额，其它服务：3个实耗金额这里文字特别多这里文字特别多这里文字特别多这里文字特别多这里文字特别多这里文字特别多这里文字特别多这里文字特别多这里文字特别多",
+                "xs":"现金消费800元"
+            },{
+                "kq":"现金消费800元",
+                "xs":"现金消费800元，项目服务：2个实耗金额，其它服务：3个实耗金额实耗金额这里文字特别多这里文字特别多这里文字特别多这里文字特别多这里文字特别多这里文字特别多这里文字特别多这里文字特别多这里文字特别多实耗金额这里文字特别多这里文字特别多这里文字特别多这里文字特别多这里文字特别多这里文字特别多这里文字特别多这里文字特别多这里文字特别多"
+            },{
+                "kq":"现金消费800元消费800元现金消费800元消费800元",
+                "xs":"现金消费800元"
+            }
+       
+       ]
+    },
+    computed: {
+        isInputEmpty: function() {
+            return (this.inputTxt.length==0);
+        }
+    },
+    methods: {
+
+        showIco:function() {
+            this.isIcoShow = !this.isIcoShow;
+        },
+        pushToList:function() {
+            console.log("push");
+            this.list.push(this.inputTxt);
+            this.inputTxt="";
+            ta.value = "";
+            autosize.update(ta);
+
+            this.isIcoShow = false;
+        },
+        pushSound:function() {
+            this.idSound++;
+            this.list.push("　　　<i class='no'>"+this.idSound+"</i><i class='ii ii-yuyin-copy1-copy'></i>");
+            this.inputTxt="";
+            
+
+            this.isIcoShow = false;
+        }
+
+    }
+});
+
+
+</script>
+
+</html>
